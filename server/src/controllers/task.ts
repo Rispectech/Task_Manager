@@ -6,12 +6,15 @@ const getAllItems = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-  res.send("create items");
+  console.log(req.body);
+  res.json(req.body);
   next();
 };
 
 const getTask = (req: Request, res: Response, next: NextFunction) => {
-  res.send("get items");
+  // const data = req.params;
+  // console.log(data);
+  res.json({ id: req.params.id });
   next();
 };
 

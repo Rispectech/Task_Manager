@@ -1,7 +1,8 @@
-import { Response, Request } from "express";
 import express from "express";
+import { Response, Request } from "express";
 
-import task from "./routes/tasks";
+import router from "./routes/router";
+require("./db/db");
 
 const app = express();
 
@@ -13,10 +14,10 @@ app.get("/start", (req: Request, res: Response) => {
 
 //middleware
 
-app.use(express.json());
+// app.use(express.json());
 
 //routes
 
-app.use("/api/v1/task", task);
+app.use("/api/v1/task", router);
 
 app.listen(port, () => console.log(`server is listening on the port ${port}...`));

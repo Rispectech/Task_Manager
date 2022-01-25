@@ -13,8 +13,6 @@ const createTask = (req, res, next) => {
 };
 exports.createTask = createTask;
 const getTask = (req, res, next) => {
-    // const data = req.params;
-    // console.log(data);
     res.json({ id: req.params.id });
     next();
 };
@@ -29,3 +27,4 @@ const deleteTask = (req, res, next) => {
     next();
 };
 exports.deleteTask = deleteTask;
+//# sourceMappingURL=task.js.map
