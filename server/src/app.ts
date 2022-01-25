@@ -2,14 +2,16 @@ import express from "express";
 import { Response, Request } from "express";
 
 import router from "./routes/router";
-require("./db/db");
+import { connectDB } from "./db/db";
 
 const app = express();
 
 const port = 3000;
 
 app.get("/start", (req: Request, res: Response) => {
-  res.send("hello");
+  console.log(connectDB);
+  console.log(" good");
+  res.send("hello is  working server");
 });
 
 //middleware
