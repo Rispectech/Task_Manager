@@ -11,7 +11,7 @@ const port = 3000;
 app.get("/start", (req: Request, res: Response) => {
   console.log(connectDB);
   console.log(" good");
-  res.send("hello is not working server");
+  res.send("hello is working server");
 });
 
 //middleware
@@ -20,6 +20,14 @@ app.get("/start", (req: Request, res: Response) => {
 
 //routes
 
-app.use("/api/v1/task", router);
+const start = async () => {
+  try {
+    await connectDB();
+    app.listen(port, () => console.log(`server is listening on the port ${port}...`));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-app.listen(port, () => console.log(`server is not listening on the port ${port}...`));
+start();
+app.use("/api/v1/task", router);
