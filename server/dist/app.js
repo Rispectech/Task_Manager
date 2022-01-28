@@ -24,12 +24,14 @@ app.get("/start", (req, res) => {
 });
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(process.env);
         yield (0, db_1.connectDB)();
-        app.listen(port, () => console.log(`server is listening on the port ${port}...`));
+        app.listen(port, () => console.log(`server is not listening on the port ${port}...`));
     }
     catch (error) {
         console.log(error);
     }
 });
+start();
 app.use("/api/v1/task", router_1.default);
 //# sourceMappingURL=app.js.map
