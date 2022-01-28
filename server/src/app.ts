@@ -23,8 +23,7 @@ app.use(express.json());
 
 const start = async () => {
   try {
-    console.log(process.env.MONGO_URI);
-    await connectDB();
+    await connectDB(process.env.MONGO_URI);
     app.listen(port, () => console.log(`server is listening on the port ${port}...`));
   } catch (error) {
     console.log(error);

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router_1 = __importDefault(require("./routes/router"));
 const db_1 = require("./db/db");
+require("dotenv").config();
 const app = (0, express_1.default)();
 const port = 3000;
 app.get("/start", (req, res) => {
@@ -22,11 +23,12 @@ app.get("/start", (req, res) => {
     console.log(" good");
     res.send("hello is working server");
 });
+app.use(express_1.default.json());
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(process.env);
+        console.log(process.env.MONGO_URI);
         yield (0, db_1.connectDB)();
-        app.listen(port, () => console.log(`server is not listening on the port ${port}...`));
+        app.listen(port, () => console.log(`server is listening on the port ${port}...`));
     }
     catch (error) {
         console.log(error);
