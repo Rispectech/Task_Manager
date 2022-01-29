@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const ConnectServerString = "mongodb+srv://Rishabh:132001@nodeexpressprojects.yil9q.mongodb.net/3-Task-Manager?retryWrites=true&w=majority";
 const connectDB = (url) => {
-    return mongoose_1.default.connect(ConnectServerString, {
+    console.log(url);
+    return mongoose_1.default.connect(url, {
         useNewUrlParser: true,
         useCreateIndex: true,
         useFindAndModify: false,

@@ -26,8 +26,7 @@ app.get("/start", (req, res) => {
 app.use(express_1.default.json());
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(process.env.MONGO_URI);
-        yield (0, db_1.connectDB)();
+        yield (0, db_1.connectDB)(process.env.MONGO_URI);
         app.listen(port, () => console.log(`server is listening on the port ${port}...`));
     }
     catch (error) {
