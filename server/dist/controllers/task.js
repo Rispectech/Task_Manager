@@ -14,36 +14,76 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTask = exports.updateTask = exports.getTask = exports.createTask = exports.getAllItems = void 0;
 const Task_1 = __importDefault(require("../models/Task"));
-const getAllItems = (req, res, next) => {
-    res.send("all items");
+const getAllItems = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allTask = yield Task_1.default.find({});
+        res.status(201).json(allTask);
+    }
+    catch (error) {
+        res.status(500).json({ type: error.name, msg: error.message });
+    }
     next();
-};
+});
 exports.getAllItems = getAllItems;
 const createTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body);
         const NewSchema = yield Task_1.default.create(req.body);
-        console.log(NewSchema);
         res.status(201).json(NewSchema);
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({ type: error.name, msg: error.message });
     }
     next();
 });
 exports.createTask = createTask;
-const getTask = (req, res, next) => {
-    res.json({ id: req.params.id });
+const getTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const SingleTask = yield Task_1.default.findOne({ _id: req.params.id }).exec();
+        if (!SingleTask)
+            return res
+                .status(404)
+                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
+        res.status(201).json(SingleTask);
+    }
+    catch (error) {
+        res.status(500).json({ type: error.name, msg: error.message });
+    }
     next();
-};
+});
 exports.getTask = getTask;
-const updateTask = (req, res, next) => {
-    res.send("update items");
+const deleteTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const SingleTask = yield Task_1.default.findOneAndDelete({ _id: req.params.id });
+        if (!SingleTask)
+            return res
+                .status(404)
+                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
+        res.status(201).json(SingleTask);
+    }
+    catch (error) {
+        res.status(500).json({ type: error.name, msg: error.message });
+    }
     next();
-};
-exports.updateTask = updateTask;
-const deleteTask = (req, res, next) => {
-    res.send("delete items");
-    next();
-};
+});
 exports.deleteTask = deleteTask;
+const updateTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const UpdateTask = yield Task_1.default.findOneAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+            runValidators: true,
+        }).exec();
+        if (!UpdateTask)
+            return res
+                .status(404)
+                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
+        res.status(201).json(UpdateTask);
+    }
+    catch (error) {
+        res.status(500).json({ type: error.name, msg: error.message });
+    }
+    next();
+});
+exports.updateTask = updateTask;
 //# sourceMappingURL=task.js.map

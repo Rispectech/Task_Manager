@@ -1,5 +1,6 @@
 import express from "express";
 import { Response, Request } from "express";
+import cors from "cors";
 
 import router from "./routes/router";
 import { connectDB } from "./db/db";
@@ -16,7 +17,7 @@ app.get("/start", (req: Request, res: Response) => {
 });
 
 //middleware
-
+app.use(cors()); //important when both server and clients are localhosts
 app.use(express.json());
 
 //routes

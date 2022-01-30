@@ -13,6 +13,7 @@ const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
 
 const createTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.body);
     const NewSchema = await TaskSchema.create(req.body);
     // console.log(NewSchema);
     res.status(201).json(NewSchema);

@@ -272,6 +272,7 @@ form > :last-child {
   color: var(--red-dark);
 }
 .text-success {
+  display: block;
   color: var(--green-dark);
 }
 /* loading */
