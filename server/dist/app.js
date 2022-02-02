@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const router_1 = __importDefault(require("./routes/router"));
 const db_1 = require("./db/db");
+const errors_1 = require("./errors/errors");
 require("dotenv").config();
 const app = (0, express_1.default)();
 const port = 3000;
@@ -26,6 +27,9 @@ app.get("/start", (req, res) => {
 });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.use("/api/v1/task", router_1.default);
+app.use(errors_1.ErrorHandler);
+app.use(errors_1.ErrorRoutes);
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, db_1.connectDB)(process.env.MONGO_URI);
@@ -36,5 +40,4 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 start();
-app.use("/api/v1/task", router_1.default);
 //# sourceMappingURL=app.js.map

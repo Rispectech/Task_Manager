@@ -14,76 +14,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTask = exports.updateTask = exports.getTask = exports.createTask = exports.getAllItems = void 0;
 const Task_1 = __importDefault(require("../models/Task"));
-const getAllItems = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const allTask = yield Task_1.default.find({});
-        res.status(201).json(allTask);
-    }
-    catch (error) {
-        res.status(500).json({ type: error.name, msg: error.message });
-    }
-    next();
-});
+const async_1 = require("../middleware/async");
+const errors_1 = require("../errors/errors");
+const getAllItems = (0, async_1.AsyncWrapper)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const allTask = yield Task_1.default.find({});
+    res.status(201).json(allTask);
+}));
 exports.getAllItems = getAllItems;
-const createTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(req.body);
-        const NewSchema = yield Task_1.default.create(req.body);
-        res.status(201).json(NewSchema);
-    }
-    catch (error) {
-        console.log(error);
-        res.status(500).json({ type: error.name, msg: error.message });
-    }
-    next();
-});
+const createTask = (0, async_1.AsyncWrapper)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    const NewSchema = yield Task_1.default.create(req.body);
+    res.status(201).json(NewSchema);
+}));
 exports.createTask = createTask;
-const getTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const SingleTask = yield Task_1.default.findOne({ _id: req.params.id }).exec();
-        if (!SingleTask)
-            return res
-                .status(404)
-                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
-        res.status(201).json(SingleTask);
-    }
-    catch (error) {
-        res.status(500).json({ type: error.name, msg: error.message });
-    }
+const getTask = (0, async_1.AsyncWrapper)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const SingleTask = yield Task_1.default.findOne({ _id: req.params.id }).exec();
+    if (!SingleTask)
+        return next((0, errors_1.CreateErrorClass)(505, "Undefined Document", `Task not found with id :${req.params.id}`));
+    res.status(201).json(SingleTask);
     next();
-});
+}));
 exports.getTask = getTask;
-const deleteTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const SingleTask = yield Task_1.default.findOneAndDelete({ _id: req.params.id });
-        if (!SingleTask)
-            return res
-                .status(404)
-                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
-        res.status(201).json(SingleTask);
-    }
-    catch (error) {
-        res.status(500).json({ type: error.name, msg: error.message });
-    }
+const deleteTask = (0, async_1.AsyncWrapper)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const SingleTask = yield Task_1.default.findOneAndDelete({ _id: req.params.id });
+    if (!SingleTask)
+        return next((0, errors_1.CreateErrorClass)(505, "Undefined Document", `Task not found with id :${req.params.id}`));
+    res.status(201).json(SingleTask);
     next();
-});
+}));
 exports.deleteTask = deleteTask;
-const updateTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const UpdateTask = yield Task_1.default.findOneAndUpdate({ _id: req.params.id }, req.body, {
-            new: true,
-            runValidators: true,
-        }).exec();
-        if (!UpdateTask)
-            return res
-                .status(404)
-                .json({ type: "Undefined", msg: `Task not found with id :${req.params.id}` });
-        res.status(201).json(UpdateTask);
-    }
-    catch (error) {
-        res.status(500).json({ type: error.name, msg: error.message });
-    }
+const updateTask = (0, async_1.AsyncWrapper)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const UpdateTask = yield Task_1.default.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+        runValidators: true,
+    }).exec();
+    if (!UpdateTask)
+        return next((0, errors_1.CreateErrorClass)(505, "Undefined Document", `Task not found with id :${req.params.id}`));
+    res.status(201).json(UpdateTask);
     next();
-});
+}));
 exports.updateTask = updateTask;
 //# sourceMappingURL=task.js.map

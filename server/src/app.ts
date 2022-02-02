@@ -4,6 +4,7 @@ import cors from "cors";
 
 import router from "./routes/router";
 import { connectDB } from "./db/db";
+import { ErrorRoutes, ErrorHandler } from "./errors/errors";
 require("dotenv").config();
 
 const app = express();
@@ -21,6 +22,9 @@ app.use(cors()); //important when both server and clients are localhosts
 app.use(express.json());
 
 //routes
+app.use("/api/v1/task", router);
+app.use(ErrorRoutes);
+// app.use(ErrorHandler);
 
 const start = async () => {
   try {
@@ -32,4 +36,3 @@ const start = async () => {
 };
 
 start();
-app.use("/api/v1/task", router);
